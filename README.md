@@ -1,0 +1,2 @@
+# Codebase da disciplina de Estruturas de Dados
+Este repositório contém o código fonte da disciplina de Estruturas de Dados do curso de Sistemas e Mídias Digitais da Universidade Federal do Ceará, ministrada pelo professor Me. Daniel Jaguaribe no semestre 2024.2.
