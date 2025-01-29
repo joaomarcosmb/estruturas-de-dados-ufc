@@ -5,12 +5,14 @@ class Client:
         self.name = name
         self.credit = credit
 
+
 class AVLNode:
     def __init__(self, client):
         self.client = client
         self.left_child = None
         self.right_child = None
         self.height = 1
+
 
 class AVLTree:
     def __init__(self):
@@ -62,11 +64,11 @@ class AVLTree:
             return node
 
         if self.is_left_child_heavy(node):
-            if(self.balance_factor(node.left_child) < 0):
+            if (self.balance_factor(node.left_child) < 0):
                 node.left_child = self.rotate_left(node.left_child)
             return self.rotate_right(node)
         elif self.is_right_child_heavy(node):
-            if(self.balance_factor(node.right_child) > 0):
+            if (self.balance_factor(node.right_child) > 0):
                 node.right_child = self.rotate_right(node.right_child)
             return self.rotate_left(node)
 
@@ -128,6 +130,39 @@ class AVLTree:
 
         self.root = _remove_by_account_number(self.root, account_number)
 
+    def print_pre_order(self, node):
+        if not node:
+            return
+        print(node.client)
+        self.print_pre_order(node.left_child)
+        self.print_pre_order(node.right_child)
+
+    def print_in_order(self, node):
+        if not node:
+            return
+        self.print_in_order(node.left_child)
+        print(node.client)
+        self.print_in_order(node.right_child)
+
+    def print_post_order(self, node):
+        if not node:
+            return
+        self.print_post_order(node.left_child)
+        self.print_post_order(node.right_child)
+        print(node.client)
+
+    def print_tree(self):
+        def _print_tree(node, level=0, prefix="Root: "):
+            if not node:
+                return
+            print("  " * level + prefix + f"[Account: {node.client.account_number}, Name: {node.client.name}]")
+            if node.left_child:
+                _print_tree(node.left_child, level + 1, "L--- ")
+            if node.right_child:
+                _print_tree(node.right_child, level + 1, "R--- ")
+
+        _print_tree(self.root)
+
 
 def main():
     tree = AVLTree()
@@ -151,8 +186,9 @@ def main():
         print("1. Cadastrar novo cliente")
         print("2. Remover cliente")
         print("3. Pesquisar cliente pelo número da conta")
-        print("4. Sair")
-        
+        print("4. Visualizar árvore AVL")
+        print("5. Sair")
+
         option = input("\nEscolha uma opção: ")
 
         if option == "1":
@@ -160,7 +196,7 @@ def main():
             balance = float(input("Saldo inicial: "))
             name = input("Nome do cliente: ")
             credit = float(input("Valor do crédito: "))
-            
+
             novo_client = Client(account, balance, name, credit)
             tree.insert(novo_client)
             print("\nCliente inserido com sucesso!")
@@ -187,11 +223,16 @@ def main():
                 print("\nCliente não encontrado!")
 
         elif option == "4":
+            print("\nÁrvore AVL:")
+            tree.print_tree()
+
+        elif option == "5":
             print("\nEncerrando o sistema...")
             break
 
         else:
             print("\nOpção inválida! Tente novamente.")
+
 
 if __name__ == "__main__":
     main()
